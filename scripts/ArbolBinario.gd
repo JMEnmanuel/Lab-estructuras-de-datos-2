@@ -1,4 +1,5 @@
 extends Node
+
 # Backend principal del juego. Construye el árbol, asigna el nodo seguro
 # aleatoriamente y controla la navegación del jugador
 
@@ -8,6 +9,7 @@ var nodo_actual: NodoArbol #Posición actual del jugador
 
 func _init():
 	_construir_arbol()
+	##ContenidoNodos.asignar_contenido(self)
 	_asignar_nodo_seguro()
 	
 	
