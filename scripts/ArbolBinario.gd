@@ -7,9 +7,9 @@ var raiz: NodoArbol
 var nodo_actual: NodoArbol #Posición actual del jugador
 
 
-func _init():
+func _ready():
 	_construir_arbol()
-	##ContenidoNodos.asignar_contenido(self)
+	ContenidoNodos.asignar_contenido(self)
 	_asignar_nodo_seguro()
 	
 	
