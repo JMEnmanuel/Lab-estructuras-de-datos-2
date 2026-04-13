@@ -7,10 +7,11 @@ var raiz: NodoArbol
 var nodo_actual: NodoArbol #Posición actual del jugador
 
 
-func _ready():
+func inicializar():
 	_construir_arbol()
 	ContenidoNodos.asignar_contenido(self)
 	_asignar_nodo_seguro()
+	_asignar_nodos_comprometidos()
 	
 	
 # Construye la estructura fija de 4 niveles y 15 nodos.
@@ -71,14 +72,23 @@ func _asignar_nodo_seguro():
 #sin repetir el que acaba de fallar
 func _obtener_nuevo_desafio():
 	var pool = nodo_actual.desafios
+	#print("pool dentro de obtener nuevo desafio", pool.size())
 	var disponibles = []
 	for d in pool:
 		if d != nodo_actual.desafio_actual:
 			disponibles.append(d)
 		
+	print("Disponibles: ", disponibles.size())
+	
 	if disponibles.is_empty():
 		disponibles = pool
-	nodo_actual.desafio_actual = disponibles[randi() % disponibles.size()]
+	
+	var indice = randi() % disponibles.size()
+	nodo_actual.desafio_actual = disponibles[indice].duplicate()
+
+	##print(" Indice elegido: ", indice)
+	#print("Elemento elegido: ", disponibles[indice])
+	#print("Desafio asignado: ", nodo_actual.desafio_actual)
 	return nodo_actual.desafio_actual
 	
 	
@@ -110,3 +120,36 @@ func es_hoja(nodo: NodoArbol) ->bool:
 	return nodo.izquierda == null and nodo.derecha == null
 	
 	
+	
+func responder_desafio(indice_respuesta: int) -> bool:
+	if indice_respuesta == nodo_actual.desafio_actual["correcta"]:
+		return true 
+	_obtener_nuevo_desafio()
+	return false
+	
+	
+func _asignar_nodos_comprometidos():
+	var todos = _obtener_todos_los_nodos(raiz)
+	var candidatos = []
+	
+	for nodo in todos:
+		print("Nodo: ", nodo.nombre, " es_seguro: ", nodo.es_seguro)
+		if not nodo.es_seguro:
+			candidatos.append(nodo)
+	
+	candidatos.shuffle()
+	
+	var cantidad = randi() % 2 + 4
+	for i in range(cantidad):
+		candidatos[i].esta_comprometido = true
+		candidatos[i].pista = _generar_pista(candidatos[i])
+	
+
+func _generar_pista(nodo: NodoArbol) -> String:
+	var hojas = _obtener_hojas(raiz)
+	var nodo_seguro: NodoArbol
+	for hoja in hojas:
+		if hoja.es_seguro:
+			nodo_seguro = hoja
+			break
+	return "Alerta: este nodo está comprometido. El nodo Central Seguro se encuentra en: "+ nodo_seguro.nombre
