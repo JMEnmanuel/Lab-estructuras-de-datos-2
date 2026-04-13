@@ -66,6 +66,18 @@ func _asignar_nodo_seguro():
 	var hojas = _obtener_hojas(raiz)
 	var elegido = hojas[randi() % hojas.size()]
 	elegido.es_seguro = true
+	elegido.nombre = "Nodo Central Seguro"
+	elegido.descripcion = "Núcleo protegido de la red. Desde aquí se coordina la restauración total del sistema."
+	elegido.desafios = [
+		{
+			"tipo": "multiple",
+			"pregunta": "Has llegado al núcleo de la red. Para restaurar completamente el sistema, ¿cuál es el primer paso?",
+			"opciones": ["Formatear todos los servidores", "Apagar la red completa", "Reconectar todos los sistemas inmediatamente", "Verificar la integridad de cada sistema antes de reconectarlo"],
+			"correcta": 3,
+			"msg_fallo": "Incorrecto. Reconectar sin verificar puede reintroducir la amenaza.",
+			"msg_exito": "Correcto. La verificación de integridad garantiza que los sistemas estén limpios antes de restaurar."
+		}
+	]
 	
 	
 #Selecciona un desafio aleatorio del pool del nodo actual,
@@ -133,8 +145,8 @@ func _asignar_nodos_comprometidos():
 	var candidatos = []
 	
 	for nodo in todos:
-		print("Nodo: ", nodo.nombre, " es_seguro: ", nodo.es_seguro)
-		if not nodo.es_seguro:
+		#print("Nodo: ", nodo.nombre, " es_seguro: ", nodo.es_seguro)
+		if not nodo.es_seguro and nodo.nombre != "":
 			candidatos.append(nodo)
 	
 	candidatos.shuffle()
