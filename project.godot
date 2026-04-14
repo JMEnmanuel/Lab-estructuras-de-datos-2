@@ -15,6 +15,11 @@ run/main_scene="uid://baks6kacutkla"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ContenidoNodos="*uid://bd5jfrdfh45jk"
+ArbolBinario="*uid://cvoptpkiv3dd1"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
