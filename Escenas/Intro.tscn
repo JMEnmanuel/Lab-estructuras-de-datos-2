@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://baks6kacutkla"]
+
+[ext_resource type="Script" uid="uid://bmg8y5dk0cevs" path="res://Escenas/Intro.gd" id="1_nlqx8"]
+
+[node name="Intro" type="Control" unique_id=525743044]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_nlqx8")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1191008569]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=1157239780]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -399.0
+offset_top = -103.0
+offset_right = 384.0
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempor lectus sed tempus rhoncus. Maecenas euismod, velit vitae scelerisque commodo, turpis neque dapibus elit, non mollis purus odio a massa. Ut laoreet sapien posuere, lacinia leo et, volutpat risus. Integer sed quam id nibh suscipit molestie. Integer dignissim nunc et posuere blandit. Maecenas massa mi, ultrices ut mi quis, tempus egestas turpis. Phasellus lorem purus, pharetra eget ipsum quis, placerat tincidunt leo."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
