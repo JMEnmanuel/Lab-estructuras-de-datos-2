@@ -110,18 +110,28 @@ func iniciar_desafio() -> Dictionary:
 	return _obtener_nuevo_desafio()
 	
 
-#Mueve al jugador entre derecha e izquierda, si no hay hijo en esa dirección no se mueve
-func _moverse(direccion: String) -> NodoArbol:
+# Mueve al jugador solo si superó el desafío del nodo actual.
+# Retorna el nodo resultante o null si el movimiento no es válido.
+func moverse(direccion: String) -> NodoArbol:
+	if not nodo_actual.desafio_actual.has("correcta"):
+		return null  # No ha iniciado el desafío del nodo actual
+	
 	if direccion == "izquierda" and nodo_actual.izquierda != null:
 		nodo_actual = nodo_actual.izquierda
+		iniciar_desafio()
+		return nodo_actual
 	elif direccion == "derecha" and nodo_actual.derecha != null:
 		nodo_actual = nodo_actual.derecha
-	return nodo_actual
+		iniciar_desafio()
+		return nodo_actual
+	
+	return null  # No hay hijo en esa dirección
 
 
 #Regresa al jugador a la raiz
 func reiniciar(): 
 	nodo_actual = raiz
+	nodo_actual.desafio_actual = {}
 	
 #True si encuentras el nodo seguro
 func _esta_en_nodo_seguro() -> bool:

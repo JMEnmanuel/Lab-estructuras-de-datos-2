@@ -252,3 +252,24 @@ func asignar_contenido(arbol):
 			"msg_exito": "Correcto. Los sistemas industriales deben estar en redes aisladas con acceso estrictamente controlado."
 		}
 	]
+	
+	r.derecha.derecha.derecha.nombre = "Servidor de Respaldo Externo"
+	r.derecha.derecha.derecha.descripcion = "Almacena copias cifradas de los datos críticos fuera de la red principal. Último recurso ante desastres."
+	r.derecha.derecha.derecha.desafios = [
+		{
+			"tipo": "multiple",
+			"pregunta": "El servidor de respaldo externo lleva días sin sincronizarse y nadie lo reportó. ¿Qué falla organizacional representa?",
+			"opciones": ["Falta de capacitación técnica", "Ausencia de monitoreo y responsables definidos", "Hardware obsoleto", "Conexión lenta"],
+			"correcta": 1,
+			"msg_fallo": "Incorrecto. El problema de fondo es la falta de supervisión y roles claros.",
+			"msg_exito": "Correcto. Sin monitoreo ni responsables definidos, los fallos silenciosos pasan desapercibidos."
+		},
+		{
+			"tipo": "verdadero_falso",
+			"pregunta": "Un respaldo externo cifrado es suficiente por sí solo para garantizar la continuidad del negocio ante un ataque.",
+			"opciones": ["Verdadero", "Falso"],
+			"correcta": 1,
+			"msg_fallo": "Incorrecto. El respaldo es una pieza del plan, no el plan completo.",
+			"msg_exito": "Correcto. La continuidad requiere también procedimientos, personal entrenado y pruebas regulares."
+		}
+	]

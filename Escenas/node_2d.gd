@@ -35,4 +35,13 @@ func _ready():
 		if nodo.esta_comprometido:
 			print("Comprometido: ", nodo.nombre)
 			
-	
+	# Probar movimiento sin haber respondido
+	var nodo = ArbolBinario.moverse("izquierda")
+	print("Movimiento sin desafío: ", nodo)
+
+	# Probar movimiento después de responder correctamente
+	ArbolBinario.iniciar_desafio()
+	var correcta = ArbolBinario.nodo_actual.desafio_actual["correcta"]
+	ArbolBinario.responder_desafio(correcta)
+	nodo = ArbolBinario.moverse("izquierda")
+	print("Movimiento tras responder: ", nodo.nombre if nodo else "null")
