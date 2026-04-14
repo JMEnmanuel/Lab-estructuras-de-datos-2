@@ -175,3 +175,56 @@ func _generar_pista(nodo: NodoArbol) -> String:
 			nodo_seguro = hoja
 			break
 	return "Alerta: este nodo está comprometido. El nodo Central Seguro se encuentra en: "+ nodo_seguro.nombre
+
+func obtener_mensaje_bienvenida() -> String:
+	return """Bienvenido a la aventura
+	Tu Misión es recuperar el control de la red y detener el ataque
+	
+	Instrucciones:
+	- Explora la red navegando por los nodos
+	- En cada nodo resolverás un desafio de ciberseguridad
+	- Solo podrás avanzar si respondes correctamente
+	- Elige entre ir a la izquierda o derecha para moverte
+	- Tu objetivo es encontrar el Nodo Central Seguro
+	
+	¡Buena suerte, la red depende de ti!"""
+	
+func obtener_mensaje_victoria() -> String:
+	return """¡Felicitaciones! Has logrado defender la red y asegurar la infraestructura tecnológica.
+
+Has navegado exitosamente por la red comprometida, superado cada desafío de seguridad y localizado el Nodo Central Seguro.
+
+La red ha sido restaurada y la amenaza neutralizada."""
+
+func verificar_victoria() -> bool:
+	return nodo_actual.es_seguro and nodo_actual.desafio_actual.get("correcta", -1) != -1
+
+
+# Retorna "izquierda", "derecha" o "desconocido" según donde esté el nodo seguro
+func obtener_rama_nodo_seguro() -> String:
+	if _nodo_seguro_en_rama(raiz.izquierda):
+		return "izquierda"
+	elif _nodo_seguro_en_rama(raiz.derecha):
+		return "derecha"
+	return "desconocido"
+
+func _nodo_seguro_en_rama(nodo: NodoArbol) -> bool:
+	if nodo == null:
+		return false
+	if nodo.es_seguro:
+		return true
+	return _nodo_seguro_en_rama(nodo.izquierda) or _nodo_seguro_en_rama(nodo.derecha)
+	
+func obtener_esquema_parcial() -> String:
+	var rama = obtener_rama_nodo_seguro()
+	var marca_izq = "[ ✓ BUSCA AQUÍ ]" if rama == "izquierda" else "[ ✗ ]"
+	var marca_der = "[ ✓ BUSCA AQUÍ ]" if rama == "derecha" else "[ ✗ ]"
+	
+	return """
+	         [Gateway Principal]
+	        /                    \\
+	%s          %s
+	""" % [marca_izq, marca_der]
+	
+func obtener_info_nodo_comprometido() -> String:
+	return nodo_actual.pista + "\n\n" + obtener_esquema_parcial()
