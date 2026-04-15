@@ -56,7 +56,6 @@ func insertar(nodo: NodoArbol):
 
 
 func _insertar_recursivo(actual: NodoArbol, nuevo: NodoArbol) -> NodoArbol:
-	# Inserción BST normal
 	if actual == null:
 		return nuevo
 
@@ -65,32 +64,31 @@ func _insertar_recursivo(actual: NodoArbol, nuevo: NodoArbol) -> NodoArbol:
 	elif nuevo.gravedad > actual.gravedad:
 		actual.derecha = _insertar_recursivo(actual.derecha, nuevo)
 	else:
-		return actual  # No se permiten duplicados
+		return actual
 
 	_actualizar_altura(actual)
 
 	var balance = _obtener_balance(actual)
 
 	# Caso izquierda-izquierda
-	if balance > 1 and nuevo.gravedad < actual.izquierda.gravedad:
+	if balance > 1 and _obtener_balance(actual.izquierda) >= 0:
 		return _rotar_derecha(actual)
 
 	# Caso derecha-derecha
-	if balance < -1 and nuevo.gravedad > actual.derecha.gravedad:
+	if balance < -1 and _obtener_balance(actual.derecha) <= 0:
 		return _rotar_izquierda(actual)
 
 	# Caso izquierda-derecha
-	if balance > 1 and nuevo.gravedad > actual.izquierda.gravedad:
+	if balance > 1 and _obtener_balance(actual.izquierda) < 0:
 		actual.izquierda = _rotar_izquierda(actual.izquierda)
 		return _rotar_derecha(actual)
 
 	# Caso derecha-izquierda
-	if balance < -1 and nuevo.gravedad < actual.derecha.gravedad:
+	if balance < -1 and _obtener_balance(actual.derecha) > 0:
 		actual.derecha = _rotar_derecha(actual.derecha)
 		return _rotar_izquierda(actual)
 
 	return actual
-
 
 # ─── BÚSQUEDA ───────────────────────────────────────────────────
 

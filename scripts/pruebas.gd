@@ -26,8 +26,9 @@ func _ready():
 	print(GestorJuego.obtener_reporte())
 	
 	
-	# Después del while que inserta todos los casos
-	var arbol_visual = preload("res://Escenas/ArbolVisual.tscn").instantiate()
-	add_child(arbol_visual)
-	arbol_visual.position = Vector2(500, 100)
-	arbol_visual.dibujar_arbol()
+	# Verificar estructura del árbol
+	var raiz = ArbolAVL.raiz
+	print("Raíz: Caso #", raiz.id, " gravedad ", raiz.gravedad)
+	print("Hijo izquierdo: Caso #", raiz.izquierda.id, " gravedad ", raiz.izquierda.gravedad)
+	print("Hijo derecho: Caso #", raiz.derecha.id, " gravedad ", raiz.derecha.gravedad)
+	print("Hijo derecho del derecho: Caso #", raiz.derecha.derecha.id, " gravedad ", raiz.derecha.derecha.gravedad)
