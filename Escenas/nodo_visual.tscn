@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cif2d1y28ufgs"]
+
+[ext_resource type="Script" uid="uid://orgpx11cv7tp" path="res://NodoVisual.gd" id="1_3knxp"]
+
+[node name="NodoVisual" type="Control" unique_id=1024314493]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_3knxp")
+
+[node name="Panel" type="Panel" parent="." unique_id=85222199]
+layout_mode = 0
+offset_left = -60.0
+offset_top = -30.0
+offset_right = 60.0
+offset_bottom = 30.0
+
+[node name="Label" type="Label" parent="Panel" unique_id=417809475]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArbolVisual" type="Node2D" parent="." unique_id=1639252985]
+
+[node name="Lineas" type="Node2D" parent="ArbolVisual" unique_id=1298488996]
