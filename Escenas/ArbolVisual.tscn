@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://dtubhkm27axvb"]
+
+[node name="ArbolVisual" type="Node2D" unique_id=1164304508]
+
+[node name="Lineas" type="Node2D" parent="." unique_id=1935012073]

@@ -17,8 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-ContenidoNodos="*uid://bd5jfrdfh45jk"
-ArbolBinario="*uid://cvoptpkiv3dd1"
+ArbolAVL="*uid://cvoptpkiv3dd1"
+CasosJuego="*uid://bd5jfrdfh45jk"
+GestorJuego="*uid://ccxymwllo37e8"
 
 [physics]
 
