@@ -24,7 +24,7 @@ func _process(delta):
 		fondo.position.y = 0
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_file("res://Escenas/pruebas/juego_prueba.tscn")
+	get_tree().change_scene_to_file("C:/Users/Alexander/Documents/lab-1-edd-2/Lab-estructuras-de-datos-2/scripts/pruebas.gd")
 
 func _on_oppciones_pressed() -> void:
 	pass
