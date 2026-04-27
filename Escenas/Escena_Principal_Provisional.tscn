@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dghnbertvgey8"]
+
+[ext_resource type="Script" uid="uid://b31q00d5gnvqh" path="res://Escenas/escena_principal_provisional.gd" id="1_uyh86"]
+[ext_resource type="Script" uid="uid://bl1l0m5xf85n" path="res://scripts/ArbolVisual.gd" id="2_257ot"]
+
+[node name="EscenaPrincipalProvisional" type="Node2D" unique_id=1769011156]
+script = ExtResource("1_uyh86")
+
+[node name="ArbolVisual" type="Node2D" parent="." unique_id=1460342001]
+script = ExtResource("2_257ot")
