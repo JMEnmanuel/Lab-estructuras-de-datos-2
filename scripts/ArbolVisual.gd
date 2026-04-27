@@ -403,13 +403,14 @@ func _lanzar_particulas(pos: Vector2, color_centro: Color, color_borde: Color, d
 	grad.add_point(1.0, Color(color_borde.r, color_borde.g, color_borde.b, 0.0))
 	part.color_ramp = grad
 
-	add_child(part)
-
 	# Disparar con delay y autodestruir al terminar
 	var tw = create_tween()
 	tw.tween_interval(delay)
-	## BUUUUUUUG luego se arregla tw.tween_callback(func(): part.emitting = true)
-	tw.tween_interval(part.lifetime + 0.2)
+	tw.tween_callback(func():
+		add_child(part)
+		part.emitting = true
+	)
+	tw.tween_interval(part.lifetime + 0.3)
 	tw.tween_callback(func(): if is_instance_valid(part): part.queue_free())
 
 
