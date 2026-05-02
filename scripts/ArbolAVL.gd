@@ -1,5 +1,10 @@
 extends Node
 
+# ─── SEÑALES ────────────────────────────────────────────────────
+# tipo: "LL", "RR", "LR", "RL"
+# ids:  array con los ids de los nodos involucrados en la rotación
+signal rotacion_ocurrida(tipo: String, ids: Array)
+
 var raiz: NodoArbol
 
 
@@ -24,10 +29,10 @@ func _obtener_balance(nodo: NodoArbol) -> int:
 # ─── ROTACIONES ─────────────────────────────────────────────────
 
 func _rotar_derecha(y: NodoArbol) -> NodoArbol:
-	var x = y.izquierda
+	var x  = y.izquierda
 	var t2 = x.derecha
 
-	x.derecha = y
+	x.derecha  = y
 	y.izquierda = t2
 
 	_actualizar_altura(y)
@@ -37,11 +42,11 @@ func _rotar_derecha(y: NodoArbol) -> NodoArbol:
 
 
 func _rotar_izquierda(x: NodoArbol) -> NodoArbol:
-	var y = x.derecha
+	var y  = x.derecha
 	var t2 = y.izquierda
 
 	y.izquierda = x
-	x.derecha = t2
+	x.derecha   = t2
 
 	_actualizar_altura(x)
 	_actualizar_altura(y)
@@ -70,25 +75,38 @@ func _insertar_recursivo(actual: NodoArbol, nuevo: NodoArbol) -> NodoArbol:
 
 	var balance = _obtener_balance(actual)
 
-	# Caso izquierda-izquierda
+	# Caso izquierda-izquierda (LL)
 	if balance > 1 and _obtener_balance(actual.izquierda) >= 0:
-		return _rotar_derecha(actual)
+		var ids = [actual.id, actual.izquierda.id]
+		var resultado = _rotar_derecha(actual)
+		rotacion_ocurrida.emit("LL", ids)
+		return resultado
 
-	# Caso derecha-derecha
+	# Caso derecha-derecha (RR)
 	if balance < -1 and _obtener_balance(actual.derecha) <= 0:
-		return _rotar_izquierda(actual)
+		var ids = [actual.id, actual.derecha.id]
+		var resultado = _rotar_izquierda(actual)
+		rotacion_ocurrida.emit("RR", ids)
+		return resultado
 
-	# Caso izquierda-derecha
+	# Caso izquierda-derecha (LR)
 	if balance > 1 and _obtener_balance(actual.izquierda) < 0:
+		var ids = [actual.id, actual.izquierda.id, actual.izquierda.derecha.id]
 		actual.izquierda = _rotar_izquierda(actual.izquierda)
-		return _rotar_derecha(actual)
+		var resultado = _rotar_derecha(actual)
+		rotacion_ocurrida.emit("LR", ids)
+		return resultado
 
-	# Caso derecha-izquierda
+	# Caso derecha-izquierda (RL)
 	if balance < -1 and _obtener_balance(actual.derecha) > 0:
+		var ids = [actual.id, actual.derecha.id, actual.derecha.izquierda.id]
 		actual.derecha = _rotar_derecha(actual.derecha)
-		return _rotar_izquierda(actual)
+		var resultado = _rotar_izquierda(actual)
+		rotacion_ocurrida.emit("RL", ids)
+		return resultado
 
 	return actual
+
 
 # ─── BÚSQUEDA ───────────────────────────────────────────────────
 
@@ -106,7 +124,6 @@ func _buscar_recursivo(actual: NodoArbol, gravedad: int) -> NodoArbol:
 
 # ─── RECORRIDOS ─────────────────────────────────────────────────
 
-# Inorden: retorna los nodos de menor a mayor gravedad
 func obtener_inorden() -> Array:
 	var resultado = []
 	_inorden_recursivo(raiz, resultado)
@@ -119,6 +136,16 @@ func _inorden_recursivo(nodo: NodoArbol, resultado: Array):
 	_inorden_recursivo(nodo.izquierda, resultado)
 	resultado.append(nodo)
 	_inorden_recursivo(nodo.derecha, resultado)
+
+
+# ─── UTILIDADES ─────────────────────────────────────────────────
+
+func obtener_altura_arbol() -> int:
+	return _obtener_altura(raiz)
+
+
+func obtener_balance_raiz() -> int:
+	return _obtener_balance(raiz)
 
 
 # ─── REPORTE FINAL ──────────────────────────────────────────────
