@@ -264,6 +264,9 @@ func _poblar_evidencias(evidencias: Array, confirmadas: bool):
 			hbox.modulate.a = 0.0
 			var tw = create_tween()
 			tw.tween_property(hbox, "modulate:a", 1.0, 0.25).set_delay(delay)
+			# Sonido de tick por cada evidencia confirmada
+			get_tree().create_timer(delay).timeout.connect(
+				func(): GestorAudio.sonido_evidencia(), CONNECT_ONE_SHOT)
 			delay += 0.08
 
 

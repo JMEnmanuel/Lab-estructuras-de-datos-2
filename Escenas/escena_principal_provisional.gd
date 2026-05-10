@@ -4,7 +4,7 @@ extends Node2D
 
 var panel_detective:  CanvasLayer
 var pantalla_nivel:   CanvasLayer
-var _esperando_nivel: bool = false  # true = pantalla de nivel abierta, ignorar SPACE para árbol
+var _esperando_nivel: bool = false
 
 
 func _ready():
@@ -17,18 +17,17 @@ func _ready():
 	pantalla_nivel.nivel_listo.connect(_on_nivel_listo)
 	add_child(pantalla_nivel)
 
-	# Mostrar pantalla del primer nivel al arrancar
 	_mostrar_pantalla_nivel()
 
 
 func _mostrar_pantalla_nivel():
 	if GestorJuego.hay_siguiente_caso():
 		_esperando_nivel = true
+		GestorAudio.sonido_insertar()
 		pantalla_nivel.mostrar_nivel(GestorJuego.indice_actual)
 
 
 func _on_nivel_listo():
-	# El jugador cerró la pantalla de nivel — mostrar el panel y habilitar inserción
 	_esperando_nivel = false
 	if GestorJuego.hay_siguiente_caso():
 		var caso = GestorJuego.obtener_caso_actual()
@@ -49,11 +48,16 @@ func _input(event):
 			arbol_visual.redibujar(ArbolAVL.raiz, caso.id)
 			panel_detective.confirmar_insercion(caso)
 
-			if GestorJuego.hay_siguiente_caso():
-				# Esperar, luego mostrar pantalla del siguiente nivel
+			if not GestorJuego.juego_terminado():
+				# Hay más casos — sonido de caso resuelto y pasar al siguiente nivel
+				GestorAudio.sonido_caso_resuelto()
 				await get_tree().create_timer(1.8).timeout
+				GestorAudio.sonido_nivel_completo()
+				await get_tree().create_timer(0.6).timeout
 				_mostrar_pantalla_nivel()
 			else:
+				# Último caso — fanfare final y reporte
+				GestorAudio.sonido_juego_completo()
 				await get_tree().create_timer(2.0).timeout
 				panel_detective.mostrar_reporte_final()
 

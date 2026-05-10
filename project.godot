@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 ArbolAVL="*uid://cvoptpkiv3dd1"
 CasosJuego="*uid://bd5jfrdfh45jk"
 GestorJuego="*uid://ccxymwllo37e8"
+GestorAudio="*res://scripts/GestorAudio.gd"
 
 [physics]
 
